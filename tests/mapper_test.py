@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 import pandas as pd
 from base import simple_test, test
 

@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 def match_in_dict(keys, values):
     assert len(keys) == len(values)
     return {

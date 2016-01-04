@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from pandas_pipe import *
 
 simple_test = Pipeline('Simple Test Pipeline')
