@@ -1,5 +1,8 @@
 # -*- coding:utf-8 -*-
 def match_in_dict(keys, values):
+    '''(type(keys), type(values)) -> list of values
+    *Description*
+    '''
     assert len(keys) == len(values)
     return {
         keys[i]: values[i] for i in range(0, len(keys))
@@ -7,7 +10,7 @@ def match_in_dict(keys, values):
 
 
 def equals_for_dict(d1, d2):
-    """
+    """(type(d1), type(d2)) -> bool
     Deep compare for two specific dict
     :param d1: Dict with string key and dataframe values
     :param d2: Dict with string key and dataframe values

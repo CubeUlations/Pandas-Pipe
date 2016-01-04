@@ -8,7 +8,11 @@ from _util import equals_for_dict
 
 
 class Pipeline:
+
     def __init__(self, name='Undefined Pipeline'):
+        '''(Pipeline, str) -> NoneType
+        Creating the contents of the Pipeline Object
+        '''
         self._mappers = {}
         self._filters = {}
         self._output_channels_info = {}
@@ -16,6 +20,9 @@ class Pipeline:
         self.name = name
 
     def process(self, df, channel='root'):
+        '''(Pipeline, type(df), str) -> type(df_map)
+        *Description*
+        '''
         df_map = {
             'root': df
         }
@@ -26,9 +33,15 @@ class Pipeline:
         return df_map
 
     def append(self, cls, channel='root', output_channel='output'):
+        '''(Pipeline, type(cls), str, str) -> NoneType
+        *Description*
+        '''
         self(channel, output_channel)(cls)
 
     def _process_dataframe_map(self, df_map):
+        '''(Pipeline, type(df_map)) -> type(df_map) and Boolean
+        *Description*
+        '''
         temp_df_map = {}
         for channel, df in df_map.items():
             temp_df_map.update(self._filter_dataframe(df, channel))
@@ -40,6 +53,10 @@ class Pipeline:
         return df_map, is_filter_used or is_mapper_used
 
     def _modify_dataframe(self, df, objs):
+        '''(Pipeline, type(df), type(objs)) ->
+        type(self._merge_dataframes(result_map))
+        *Description*
+        '''
         result_map = {}
         for obj in objs:
             output_channel = self._output_channels_info[obj]
@@ -49,6 +66,10 @@ class Pipeline:
         return self._merge_dataframes(result_map)
 
     def _filter_dataframe(self, df, channel):
+        '''(Pipeline, type(df), type(channel)) ->
+        type(self._modify_dataframe(df, filters))
+        *Description*
+        '''
         filters = self._filters.get(channel)
         if filters is None:
             return {
@@ -57,6 +78,10 @@ class Pipeline:
         return self._modify_dataframe(df, filters)
 
     def _map_dataframe(self, df, channel):
+        '''(Pipeline, type(df), type(channel)) ->
+        type(self._modify_dataframe(df, mappers))
+        *Description*
+        '''
         mappers = self._mappers.get(channel)
         if mappers is None:
             return {
@@ -65,6 +90,9 @@ class Pipeline:
         return self._modify_dataframe(df, mappers)
 
     def _merge_dataframes(self, df_map):
+        '''(Pipeline, type(df_map)) -> type(temp_df_map)
+        *Description*
+        '''
         temp_df_map = {}
         for key, value in df_map.items():
             if len(value) == 1:
@@ -75,6 +103,10 @@ class Pipeline:
         return temp_df_map
 
     def _process_entity(self, cls, channel, outchannel, entity_map):
+        '''(Pipeline, type(cls), type(channel), type(outchannel),
+        type(entity_map)) -> type(cls)
+        *Description*
+        '''
         obj = cls()
         self._input_channels_info[obj] = channel
         self._output_channels_info[obj] = outchannel
@@ -84,7 +116,15 @@ class Pipeline:
         return cls
 
     def __call__(self, channel='root', outchannel='output'):
+        '''(Pipeline, str, str) ->
+        type(process_function)
+        *Description*
+        '''
         def process_function(cls):
+            '''(type(cls)) ->
+            type(self._process_entity(cls, channel, outchannel, self._filters))
+            *Description*
+            '''
             if issubclass(cls, Mapper):
                 assert channel != 'output', 'You cannot use mapper for output chanell'
                 return self._process_entity(cls, channel, outchannel, self._mappers)

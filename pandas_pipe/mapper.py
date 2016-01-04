@@ -6,6 +6,9 @@ from _util import match_in_dict
 
 
 def mapping(column=None):
+    '''(type(column) or NoneType) -> type(process)
+    *Description*
+    '''
     if isinstance(column, types.FunctionType):
         # Process column as func
         column.is_mapping = True
@@ -13,6 +16,9 @@ def mapping(column=None):
         return column
 
     def process(func):
+        '''(type(func)) -> type(process)
+        *Description*
+        '''
         func.is_mapping = True
         if column:
             func.column = column
@@ -25,9 +31,14 @@ def mapping(column=None):
 
 class Mapper:
     def __init__(self):
+        '''(Mapper) -> NoneType
+        *Description*
+        '''
         pass
 
     def __call__(self, df):
+        '''(Mapper, type(df)) -> type(new_df)
+        '''
         map_functions = inspect.getmembers(self, predicate=lambda func: isinstance(func, inspect.types.MethodType)
                                                                           and getattr(func, 'is_mapping', False))
         new_df = pd.DataFrame()
