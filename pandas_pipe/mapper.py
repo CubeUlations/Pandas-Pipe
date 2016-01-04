@@ -27,7 +27,7 @@ class Mapper:
     def __init__(self):
         pass
 
-    def map_dataframe(self, df):
+    def __call__(self, df):
         map_functions = inspect.getmembers(self, predicate=lambda func: isinstance(func, inspect.types.MethodType)
                                                                           and getattr(func, 'is_mapping', False))
         new_df = pd.DataFrame()
