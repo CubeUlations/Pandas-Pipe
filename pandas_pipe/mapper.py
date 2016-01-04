@@ -6,7 +6,7 @@ from _util import match_in_dict
 
 
 def mapping(column=None):
-    if isinstance(column, types.ClassType):
+    if isinstance(column, types.FunctionType):
         # Process column as func
         column.is_mapping = True
         column.column = column.__name__

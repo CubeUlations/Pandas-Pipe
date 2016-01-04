@@ -25,6 +25,9 @@ class Pipeline:
             df_map = next_df
         return df_map
 
+    def append(self, cls, channel='root', output_channel='output'):
+        self(channel, output_channel)(cls)
+
     def _process_dataframe_map(self, df_map):
         temp_df_map = {}
         for channel, df in df_map.items():
@@ -67,7 +70,7 @@ class Pipeline:
             if len(value) == 1:
                 temp_df_map[key] = value[0]
             else:
-                temp_df_map[key] = pd.concat(value, axis=1, ignore_index=True)
+                temp_df_map[key] = pd.concat(value, axis=1, join='inner')
         df_map.clear()
         return temp_df_map
 
