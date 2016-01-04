@@ -2,7 +2,7 @@
 from setuptools import setup
 
 setup(
-    name='Pandas-Pipe',
+    name='pandas_pipe',
     version='0.1',
     url='',
     license='',
