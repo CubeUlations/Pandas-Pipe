@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='Pandas-Pipe',
-    version='0.45',
+    version='0.1',
     url='',
     license='',
     author='siredvin',
