@@ -21,8 +21,8 @@ class Mapper:
         pass
 
     def map_dataframe(self, df):
-        map_functions = inspect.getmembers(self, predicate=lambda object: isinstance(object, inspect.types.MethodType)
-                                                                          and getattr(object, 'is_mapping', False))
+        map_functions = inspect.getmembers(self, predicate=lambda func: isinstance(func, inspect.types.MethodType)
+                                                                          and getattr(func, 'is_mapping', False))
         new_df = pd.DataFrame()
         columns = df.columns.tolist()
         for map_function in map_functions:
