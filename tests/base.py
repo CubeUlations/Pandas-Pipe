@@ -5,7 +5,7 @@ test = Pipeline('Test Pipeline')
 
 
 @test(outchannel='temp')
-@simple_test()
+@simple_test
 class T1(Mapper):
     @mapping(column='t5')
     def t3(self, record):

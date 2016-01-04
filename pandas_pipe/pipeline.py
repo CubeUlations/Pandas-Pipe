@@ -1,3 +1,5 @@
+import types
+
 import pandas as pd
 from mapper import Mapper
 
@@ -54,5 +56,10 @@ class Pipeline:
                     self._mappers[channel] = []
                 self._mappers[channel].append(obj)
                 return cls
+
+        if isinstance(channel, types.ClassType):
+            cls = channel
+            channel = 'root'
+            return process_function(cls)
 
         return process_function

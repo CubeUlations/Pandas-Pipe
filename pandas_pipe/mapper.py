@@ -1,9 +1,15 @@
 import inspect
+import types
 import pandas as pd
 from _util import match_in_dict
 
 
 def mapping(column=None):
+    if isinstance(column, types.ClassType):
+        # Process column as func
+        column.is_mapping = True
+        column.column = column.__name__
+        return column
 
     def process(func):
         func.is_mapping = True
